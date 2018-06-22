@@ -3,6 +3,10 @@
 var asyncMap = require('pull-async-map-done');
 
 module.exports = function promiseMapDone(mapCb, doneCb) {
+  if(!mapCb) {
+    mapCb = function(data) { return Promise.resolve(data); }
+  }
+
   return asyncMap(
     function map(data, cb) {
       Promise.resolve(mapCb(data))
