@@ -1,6 +1,6 @@
 {
   "name": "pull-promise-map-done",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Map Pull Stream with Promise support and done callback",
   "main": "index.js",
   "scripts": {

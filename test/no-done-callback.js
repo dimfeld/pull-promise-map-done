@@ -145,3 +145,20 @@ tape('without map function', function(t) {
     })
   );
 });
+
+tape('map function throws synchronous error', function(t) {
+  t.plan(2)
+  var ERR = new Error('abort')
+  pull(
+    pull.values([1, 2, 3], function(err) {
+      console.log('on abort')
+      t.equal(err, ERR, 'abort gets error')
+    }),
+    asyncMap(function(data) {
+      throw ERR;
+    }),
+    pull.collect(function(err) {
+      t.equal(err, ERR, 'collect gets error')
+    })
+  )
+});
