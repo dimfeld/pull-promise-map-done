@@ -1,17 +1,18 @@
-# pull-map-async-map-done
+# pull-promise-map-done
 
-This is based on the async-map through stream from the core pull-stream module, with the addition of a done callback that can optionally pass on a final value.
+This is based on the async-map through stream from the core pull-stream module, but it is designed to work with promise-returning functions and also incorporates a done callback. Either the map or the done callbacks may be omitted.
 
 ```
-var asyncMap = require('pull-async-map-done');
+var asyncMap = require('pull-promise-map-done');
 
 asyncMap(
-    function map(data, cb) {
-        cb(null, `Value: ${data}`);
+    function map(data) {
+        return promiseReturningFunction(data);
     },
-    function done(err, cb) {
-        if(err) console.log("Error!");
-        cb(null, "Done"); // or cb(null) to not pass through a final piece of data
+    function done(err) {
+        if(err) {
+            return promiseReturningErrorReporter(err);
+        }
     }
 )
 ```
